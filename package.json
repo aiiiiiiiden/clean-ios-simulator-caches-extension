@@ -1,0 +1,39 @@
+{
+    "name": "clean-ios-simulator-caches-extension",
+    "displayName": "Clean iOS Simulator Caches",
+    "description": "A VSCode extension to clean iOS simulator caches.",
+    "version": "0.1.0",
+    "publisher": "aiiiiiiiden",
+    "engines": {
+        "vscode": "^1.96.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.aiiiiiiiden.cleanIosSimulatorCaches"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.aiiiiiiiden.cleanIosSimulatorCaches",
+                "title": "Clean iOS Simulator Caches"
+            }
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aiiiiiiiden/clean-ios-simulator-caches-extension.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@types/node": "^22.15.29",
+        "@types/vscode": "^1.96.0",
+        "@vscode/vsce": "^3.4.2",
+        "typescript": "^5.8.3"
+    },
+    "scripts": {
+        "build": "npx tsc && npx @vscode/vsce package"
+    }
+}
