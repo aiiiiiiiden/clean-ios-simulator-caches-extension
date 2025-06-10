@@ -13,7 +13,7 @@ This VSCode extension adds a command to clean iOS simulator caches. It executes 
 2. Search for `Clean iOS Simulator Caches`.
 3. Click the command to clean the caches.
 
-## Installation
+## Manual Installation
 
 1. Clone this repository.
 2. Run `npm install` to install dependencies.

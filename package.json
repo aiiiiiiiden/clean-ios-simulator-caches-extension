@@ -18,7 +18,7 @@
         "commands": [
             {
                 "command": "extension.aiiiiiiiden.cleanIosSimulatorCaches",
-                "title": "Clean iOS Simulator Caches"
+                "title": "iOS Simulator : Clean Caches"
             }
         ]
     },
@@ -27,8 +27,9 @@
         "url": "https://github.com/aiiiiiiiden/clean-ios-simulator-caches-extension.git"
     },
     "license": "MIT",
+    "icon": "icon.png",
     "devDependencies": {
-        "@types/node": "^22.15.29",
+        "@types/node": "^22.15.30",
         "@types/vscode": "^1.96.0",
         "@vscode/vsce": "^3.4.2",
         "typescript": "^5.8.3"

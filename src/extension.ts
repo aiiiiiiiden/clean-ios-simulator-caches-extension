@@ -1,27 +1,54 @@
 import * as vscode from 'vscode';
-import { exec } from 'child_process';
+import { exec, ExecException } from 'child_process';
 import * as os from 'os';
 
-/**
- * @param {vscode.ExtensionContext} context
- */
-export function activate(context: vscode.ExtensionContext) {
+function isMacOS(): boolean {
+  return os.platform() === 'darwin';
+}
+
+interface WindowInterface {
+  showErrorMessage(message: string): void;
+  showInformationMessage(message: string): void;
+}
+
+class VSCodeWindow implements WindowInterface {
+  showErrorMessage(message: string): void {
+    vscode.window.showErrorMessage(message);
+  }
+
+  showInformationMessage(message: string): void {
+    vscode.window.showInformationMessage(message);
+  }
+}
+
+function cleanIosSimulatorCaches(window: WindowInterface): void {
+  exec('rm -rf ~/Library/Developer/CoreSimulator/Caches', (error: ExecException | null, stdout: string, stderr: string) => {
+    if (error) {
+      window.showErrorMessage(`Error cleaning caches: ${error.message}`);
+      return;
+    }
+    window.showInformationMessage('iOS Simulator caches cleaned successfully!');
+  });
+}
+
+function registerCleanCachesCommand(context: vscode.ExtensionContext, window: WindowInterface): void {
   const disposable = vscode.commands.registerCommand('extension.aiiiiiiiden.cleanIosSimulatorCaches', () => {
-    if (os.platform() !== 'darwin') {
-      vscode.window.showErrorMessage('This command is only supported on macOS.');
+    if (!isMacOS()) {
+      window.showErrorMessage('This command is only supported on macOS.');
       return;
     }
 
-    exec('rm -rf ~/Library/Developer/CoreSimulator/Caches', (error, stdout, stderr) => {
-      if (error) {
-        vscode.window.showErrorMessage(`Error cleaning caches: ${error.message}`);
-        return;
-      }
-      vscode.window.showInformationMessage('iOS Simulator caches cleaned successfully!');
-    });
+    cleanIosSimulatorCaches(window);
   });
 
   context.subscriptions.push(disposable);
 }
 
-export function deactivate() {} 
+export function activate(context: vscode.ExtensionContext) {
+  const window = new VSCodeWindow();
+  registerCleanCachesCommand(context, window);
+}
+
+export function deactivate() {}
+
+export { isMacOS, cleanIosSimulatorCaches, WindowInterface, registerCleanCachesCommand };
